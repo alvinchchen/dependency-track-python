@@ -68,4 +68,80 @@ class DependencyTrack(Projects, Components, Licenses):
         else:
             description = f"Error while searching"
             raise DependencyTrackApiError(description, response)
+            
+    def search_component(self, query):
+        """Search component from the server
+    
+        API endpoint: GET /component/?searchText={query}
+        
+        :Example:
+        >>> dt.search_component('dnsmasq-2.78')
+        
+        :return: the seatch result
+        :rtype: dict
+        :raises DependencyTrackApiError: if the REST call failed
+        """
+        response = self.session.get(self.api + f"/component/?searchText={query}")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            description = f"Error while component searching"
+            raise DependencyTrackApiError(description, response)
+
+    def search_project(self, query):
+        """Search project from the server
+    
+        API endpoint: GET /project/?searchText={query}
+        
+        :Example:
+        >>> dt.search_project('my project')['results']['component']
+        
+        :return: the seatch result
+        :rtype: dict
+        :raises DependencyTrackApiError: if the REST call failed
+        """
+        response = self.session.get(self.api + f"/project/?searchText={query}")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            description = f"Error while project searching"
+            raise DependencyTrackApiError(description, response)
+
+    def search_vulnerability(self, query):
+        """Search vulnerability from the server
+    
+        API endpoint: GET /vulnerability/?searchText={query}
+        
+        :Example:
+        >>> dt.search_vulnerability('my vulnerability')
+        
+        :return: the seatch result
+        :rtype: dict
+        :raises DependencyTrackApiError: if the REST call failed
+        """
+        response = self.session.get(self.api + f"/vulnerability/?searchText={query}")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            description = f"Error while vulnerability searching"
+            raise DependencyTrackApiError(description, response)
+
+    def search_license(self, query):
+        """Search license from the server
+    
+        API endpoint: GET /license/?searchText={query}
+        
+        :Example:
+        >>> dt.search_license('my license')
+        
+        :return: the seatch result
+        :rtype: dict
+        :raises DependencyTrackApiError: if the REST call failed
+        """
+        response = self.session.get(self.api + f"/license/?searchText={query}")
+        if response.status_code == 200:
+            return response.json()
+        else:
+            description = f"Error while license searching"
+            raise DependencyTrackApiError(description, response)
 

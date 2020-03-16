@@ -5,7 +5,10 @@
 
 .. |Python Version| image:: https://img.shields.io/badge/python-3.6%2C3.7%2C3.8-blue?logo=python
    :target: https://www.python.org/doc/versions/
-
+   
+.. |Downloads| image:: https://pypip.in/download/dependency-track/badge.svg?period=week
+    :target: https://pypi.python.org/pypi/dependency-track/
+    
 A simple wrapper for the Dependency Track REST API.
 
 Usage

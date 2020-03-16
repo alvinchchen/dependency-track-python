@@ -1,4 +1,4 @@
-|License| |Python Version|
+|License| |Python Version| |Downloads|
 
 .. |License| image:: https://img.shields.io/badge/license-GPL2.0+-blue.svg
    :target: https://github.com/alvinchchen/dependency-track-python/LICENSE.md

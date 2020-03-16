@@ -21,7 +21,7 @@ class Projects:
         :rtype: list()
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + "/project")
+        response = self.session.get(self.api + "/project", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:
@@ -40,7 +40,7 @@ class Projects:
         :rtype: list()
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + f"/project/{uuid}/property")
+        response = self.session.get(self.api + f"/project/{uuid}/property", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:
@@ -58,10 +58,30 @@ class Projects:
         :rtype: project dependency dict
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + f"/dependency/project/{uuid}")
+        
+        response = self.session.get(self.api + f"/dependency/project/{uuid}", params=self.paginated_param_payload)
+        print(response.url)
         if response.status_code == 200:
             return response.json()
         else:
             description = f"Error while getting dependency for project {uuid}"
+            raise DependencyTrackApiError(description, response)
+            
+    def get_project(self, uuid):
+        """Get details of project.
+    
+        API Endpoint: GET /project/{uuid}/property
+    
+        :param uuid: the ID of the project to be analysed
+        :type uuid: uuid string
+        :return: the requested project property
+        :rtype: list()
+        :raises DependencyTrackApiError: if the REST call failed
+        """
+        response = self.session.get(self.api + f"/project/{uuid}/", params=self.paginated_param_payload)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            description = f"Error while getting project {uuid}"
             raise DependencyTrackApiError(description, response)
 

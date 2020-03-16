@@ -21,7 +21,7 @@ class Components:
         :rtype: list()
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + "/component")
+        response = self.session.get(self.api + "/component", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:
@@ -40,7 +40,7 @@ class Components:
         :rtype: dist
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + f"/dependency/component/{uuid}")
+        response = self.session.get(self.api + f"/dependency/component/{uuid}", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:

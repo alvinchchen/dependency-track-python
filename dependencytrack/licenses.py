@@ -20,7 +20,7 @@ class Licenses:
         :rtype: list()
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + "/license")
+        response = self.session.get(self.api + "/license", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:
@@ -37,7 +37,7 @@ class Licenses:
         :rtype: list()
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + "/license/concise")
+        response = self.session.get(self.api + "/license/concise", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:

@@ -41,7 +41,13 @@ class DependencyTrack(Projects, Components, Licenses):
 
         self.api = self.host + "/api/v1"
         self.session = requests.Session()
-        self.session.headers.update({"X-Api-Key": f"{self.api_key}"})
+        self.session.headers.update({"X-Api-Key": f"{self.api_key}", "X-Total-Count": '5aa0'})
+        """
+        Most APIs are paginated so if you have more than 100 results you’ll need to page through them.
+        X-Total-Count header seems no use to increase the number of result.
+        So using parameter is my workround for now. Guess 10000 will fit for most of situation.
+        """
+        self.paginated_param_payload = {'pageSize': "10000", 'pageNumber': "1"}
 
         logger.info(
             f"DependencyTrack instance against {self.host} using {self.api}"
@@ -62,7 +68,7 @@ class DependencyTrack(Projects, Components, Licenses):
         :rtype: dict {'license': [], 'project': [], 'component': [], 'vulnerability': []}
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + f"/search/{query}")
+        response = self.session.get(self.api + f"/search/{query}", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()['results']
         else:
@@ -81,7 +87,7 @@ class DependencyTrack(Projects, Components, Licenses):
         :rtype: dict
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + f"/component/?searchText={query}")
+        response = self.session.get(self.api + f"/component/?searchText={query}", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:
@@ -100,7 +106,7 @@ class DependencyTrack(Projects, Components, Licenses):
         :rtype: dict
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + f"/project/?searchText={query}")
+        response = self.session.get(self.api + f"/project/?searchText={query}", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:
@@ -119,7 +125,7 @@ class DependencyTrack(Projects, Components, Licenses):
         :rtype: dict
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + f"/vulnerability/?searchText={query}")
+        response = self.session.get(self.api + f"/vulnerability/?searchText={query}", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:
@@ -138,7 +144,7 @@ class DependencyTrack(Projects, Components, Licenses):
         :rtype: dict
         :raises DependencyTrackApiError: if the REST call failed
         """
-        response = self.session.get(self.api + f"/license/?searchText={query}")
+        response = self.session.get(self.api + f"/license/?searchText={query}", params=self.paginated_param_payload)
         if response.status_code == 200:
             return response.json()
         else:

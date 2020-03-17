@@ -17,13 +17,13 @@ Usage
 Installation
 ------------
 
-   This project is available as `Python package on PyPi.org <https://pypi.org/project/dependencytrack/>`_.
+   This project is available as `Python package on PyPi.org <https://pypi.org/project/dependency-track/>`_.
 
 -  Install DependencyTrack and required dependencies:
 
    .. code:: shell
 
-      pip install dependencytrack requests
+      pip install dependency-track requests
 
 Using the API
 -------------

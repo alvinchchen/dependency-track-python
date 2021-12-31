@@ -7,12 +7,13 @@ import requests
 from .projects import Projects
 from .components import Components
 from .licenses import Licenses
+from .bom import Bom
 from .exceptions import AuthenticationError, DependencyTrackApiError
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
-class DependencyTrack(Projects, Components, Licenses):
+class DependencyTrack(Projects, Components, Licenses, Bom):
 
     """Main DependencyTrack API class
 
@@ -24,7 +25,7 @@ class DependencyTrack(Projects, Components, Licenses):
     >>> dt = DependencyTrack(url, api_key)
 
     .. note::
-        
+
         The class instantiation exits if the session with the DependencyTrack server
         can't be established
 
@@ -52,18 +53,18 @@ class DependencyTrack(Projects, Components, Licenses):
         logger.info(
             f"DependencyTrack instance against {self.host} using {self.api}"
         )
-        
+
     def close(self):
         self.session.close()
 
     def search(self, query):
         """Search from the server
-    
+
         API endpoint: GET /search/{query}
-        
+
         :Example:
         >>> dt.search('dnsmasq-2.78')['results']['component']
-        
+
         :return: the seatch result
         :rtype: dict {'license': [], 'project': [], 'component': [], 'vulnerability': []}
         :raises DependencyTrackApiError: if the REST call failed
@@ -74,15 +75,15 @@ class DependencyTrack(Projects, Components, Licenses):
         else:
             description = f"Error while searching"
             raise DependencyTrackApiError(description, response)
-            
+
     def search_component(self, query):
         """Search component from the server
-    
+
         API endpoint: GET /component/?searchText={query}
-        
+
         :Example:
         >>> dt.search_component('dnsmasq-2.78')
-        
+
         :return: the seatch result
         :rtype: dict
         :raises DependencyTrackApiError: if the REST call failed
@@ -96,12 +97,12 @@ class DependencyTrack(Projects, Components, Licenses):
 
     def search_project(self, query):
         """Search project from the server
-    
+
         API endpoint: GET /project/?searchText={query}
-        
+
         :Example:
         >>> dt.search_project('my project')['results']['component']
-        
+
         :return: the seatch result
         :rtype: dict
         :raises DependencyTrackApiError: if the REST call failed
@@ -115,12 +116,12 @@ class DependencyTrack(Projects, Components, Licenses):
 
     def search_vulnerability(self, query):
         """Search vulnerability from the server
-    
+
         API endpoint: GET /vulnerability/?searchText={query}
-        
+
         :Example:
         >>> dt.search_vulnerability('my vulnerability')
-        
+
         :return: the seatch result
         :rtype: dict
         :raises DependencyTrackApiError: if the REST call failed
@@ -134,12 +135,12 @@ class DependencyTrack(Projects, Components, Licenses):
 
     def search_license(self, query):
         """Search license from the server
-    
+
         API endpoint: GET /license/?searchText={query}
-        
+
         :Example:
         >>> dt.search_license('my license')
-        
+
         :return: the seatch result
         :rtype: dict
         :raises DependencyTrackApiError: if the REST call failed

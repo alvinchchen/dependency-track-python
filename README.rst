@@ -5,10 +5,10 @@
 
 .. |Python Version| image:: https://img.shields.io/badge/python-3.6%2C3.7%2C3.8-blue?logo=python
    :target: https://www.python.org/doc/versions/
-   
+
 .. |Downloads| image:: https://pypip.in/download/dependency-track/badge.svg?period=week
     :target: https://pypi.python.org/pypi/dependency-track/
-    
+
 A simple wrapper for the Dependency Track REST API.
 
 Usage
@@ -41,17 +41,19 @@ Using the API
 		dt = DependencyTrack(url, api_key)
 
 		dt.list_projects()
-		
+
 		dt.get_project_property('ab36ead0-c7b0-47f5-89ac-7f92a0bbe12e')
-		
+
 		dt.list_components()
 
 		dt.get_project_dependency('ab36ead0-c7b0-47f5-89ac-7f92a0bbe12e')
-		
+
 		dt.get_component_dependency('db6157c2-f0a3-447c-902d-aecd360958bd')
-		
+
 		dt.list_concise_licenses()[0]
-		
+
 		dt.get_license('MIT')
 
 		dt.search('dnsmasq-2.0')
+
+		dt.upload_bom('bom.xml')
